@@ -25,13 +25,13 @@ final class OpenaiTtsClientTest extends TestCase
     public function testRunPostsOnlyPublicParamsAndReturnsManagedAudio(): void
     {
         $transport = new QueueHttpClient([
-            new Response(200, [], '{"id":"task_1","status":"completed","audios":[{"url":"https://runapi.ai/audio.mp3","format":"mp3","mime_type":"audio/mpeg","size_bytes":128}],"extra_field":"kept"}'),
+            new Response(200, [], '{"id":"task_1","status":"completed","audios":[{"url":"https://runapi.ai/audio.mp3","format":"mp3","mime_type":"audio/mpeg","size_bytes":128}],"billing":{"reservation":{"amount_cents":12}},"extra_field":"kept"}'),
         ]);
         $client = new OpenaiTtsClient(new ClientOptions(apiKey: 'k', httpClient: $transport, maxRetries: 0));
 
         $result = $client->textToSpeech->run([
             'model' => 'tts-1',
-            'text' => 'Hello from RunAPI',
+            'text' => 'A product render',
         ]);
 
         $body = json_decode((string) $transport->requests[0]->getBody(), true, flags: JSON_THROW_ON_ERROR);
@@ -40,8 +40,12 @@ final class OpenaiTtsClientTest extends TestCase
         self::assertSame('completed', $result->status);
         self::assertSame('audio/mpeg', $result->audios[0]->mimeType);
         self::assertSame(128, $result->audios[0]->sizeBytes);
+        self::assertSame(12, $result->billing?->reservation?->amountCents);
         self::assertSame('kept', $result->toArray()['extra_field']);
-        self::assertSame(['model' => 'tts-1', 'text' => 'Hello from RunAPI'], $body);
+        self::assertSame([
+            'model' => 'tts-1',
+            'text' => 'A product render',
+        ], $body);
         self::assertSame('/api/v1/openai_tts/text_to_speech', $transport->requests[0]->getUri()->getPath());
     }
 
