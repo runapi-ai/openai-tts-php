@@ -36,8 +36,8 @@ Pass request parameters as associative arrays with snake_case keys. Keep
 ## Links
 
 - Model page: https://runapi.ai/models/openai-tts
-- SDK docs: https://runapi.ai/docs#sdk-openai-tts
-- Product docs: https://runapi.ai/docs#openai-tts
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/openai-tts/text-to-speech
 - Pricing and rate limits: https://runapi.ai/models/openai-tts/tts-1
 - Full catalog: https://runapi.ai/models
 - GitHub repository: https://github.com/runapi-ai/openai-tts-php
