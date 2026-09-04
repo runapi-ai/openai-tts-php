@@ -33,6 +33,10 @@ echo $result->audios[0]->url . PHP_EOL;
 Pass request parameters as associative arrays with snake_case keys. Keep
 `RUNAPI_API_KEY` in the environment or your secret manager.
 
+Text-to-speech returns its terminal response directly when available and
+otherwise follows an accepted Task automatically. Use `subscribe()` to observe
+Task updates.
+
 ## Links
 
 - Model page: https://runapi.ai/models/openai-tts
