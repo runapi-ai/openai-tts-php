@@ -33,7 +33,6 @@ readonly class TextToSpeech extends SyncResource
         return new self(
             $http,
             '/api/v1/openai_tts/text_to_speech',
-            'openai-tts/text-to-speech',
             TextToSpeechResponse::class,
         );
     }
